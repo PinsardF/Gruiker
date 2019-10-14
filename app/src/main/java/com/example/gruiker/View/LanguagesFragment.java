@@ -1,4 +1,4 @@
-package com.example.gruiker;
+package com.example.gruiker.View;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -13,18 +13,19 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.example.gruiker.R;
+import com.example.gruiker.ViewModel.LanguagesViewModel;
 
-public class SettingsFragment extends Fragment {
 
-    private com.example.gruiker.SettingsViewModel settingsViewModel;
+public class LanguagesFragment extends Fragment {
+
+    private LanguagesViewModel languagesViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        settingsViewModel =
-                ViewModelProviders.of(this).get(com.example.gruiker.SettingsViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_settings, container, false);
-        final TextView textView = root.findViewById(R.id.text_settings);
-        settingsViewModel.getText().observe(this, new Observer<String>() {
+        languagesViewModel = ViewModelProviders.of(this).get(LanguagesViewModel.class);
+        View root = inflater.inflate(R.layout.fragment_languages, container, false);
+        final TextView textView = root.findViewById(R.id.text_languages);
+        languagesViewModel.getText().observe(this, new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
                 textView.setText(s);

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <!--Liste des items dans le NavigationDrawer-->
     <item android:id="@+id/twitter"
         android:icon="@drawable/loupe"
         android:title="Tweets"/>

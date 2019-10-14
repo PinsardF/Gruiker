@@ -1,10 +1,11 @@
-package com.example.gruiker;
+package com.example.gruiker.Model;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -14,9 +15,10 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.example.gruiker.SettingsFragment;
-import com.example.gruiker.TwitterFragment;
+import com.example.gruiker.View.LanguagesFragment;
 import com.example.gruiker.R;
+import com.example.gruiker.View.SettingsFragment;
+import com.example.gruiker.View.TwitterFragment;
 import com.google.android.material.navigation.NavigationView;
 
 public class MainActivity extends AppCompatActivity {
@@ -35,8 +37,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        sharedPreferences = getSharedPreferences("", Context.MODE_PRIVATE);
-        editor = sharedPreferences.edit();
+        sharedPreferences = getSharedPreferences("", Context.MODE_PRIVATE);//Création du langage de base si besoin
+        editor = sharedPreferences.edit();//Sinon, mise en place du langage choisi à la dernière utilisation de l'app
         String current_language = sharedPreferences.getString("current_language","");
         if(current_language.equals("")){
             editor.putString("current_language","Cochon");
@@ -46,25 +48,25 @@ public class MainActivity extends AppCompatActivity {
             editor.putString("current_middle","u");
             editor.putString("current_ending","ik");
             editor.apply();
-        }
+        }//else{}   Changer le thème pour celui resté dans le cache
 
-        colorPrimary = sharedPreferences.getString("current_primarycolor","");
+        colorPrimary = sharedPreferences.getString("current_primarycolor","");//Détermination des couleurs
         colorPrimaryDark = sharedPreferences.getString("current_primarycolordark","");
 
         dl = (DrawerLayout)findViewById(R.id.activity_main);
         t = new ActionBarDrawerToggle(this, dl,R.string.Open, R.string.Close);
 
-        dl.addDrawerListener(t);
+        dl.addDrawerListener(t);//Création du Drawer et du DrawerListener
         t.syncState();
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        Fragment fragment = new TwitterFragment();
+        Fragment fragment = new TwitterFragment();//Affichage du Fragment par défaut (le Fragment TwitterFragment)
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.activity_main_frame_layout, fragment);
         ft.commit();
 
-        nv = (NavigationView)findViewById(R.id.nv);
+        nv = (NavigationView)findViewById(R.id.nv);//Mise en place du NavigationDrawer
         nv.getHeaderView(0).setBackgroundColor(Color.parseColor("#FF69B4"));
         nv.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -86,13 +88,17 @@ public class MainActivity extends AppCompatActivity {
                         return true;
                 }
 
-                if (fragment != null) {
+                if (fragment != null) {//Remplacement du fragment actuel par le fragment choisi
                     FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
                     ft.replace(R.id.activity_main_frame_layout, fragment);
                     ft.commit();
+                }else{//Message d'erreur si aucun fragment n'a correctement été sélectionné
+                    Toast toast = Toast.makeText(getApplicationContext(),"ERROR: No Fragment Selected",Toast.LENGTH_SHORT);
+                    toast.show();
                 }
-                DrawerLayout drawer = (DrawerLayout) findViewById(R.id.activity_main);
-                drawer.closeDrawer(GravityCompat.START);
+
+                DrawerLayout drawer = (DrawerLayout) findViewById(R.id.activity_main);//Fin de la mise en place du Drawer, et
+                drawer.closeDrawer(GravityCompat.START);//activation du Drawer
 
                 return true;
 
@@ -103,45 +109,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    public boolean onOptionsItemSelected(MenuItem item) {//Nécessaire pour que, lorsqu'on appuie sur les 3 traits
 
-        if(t.onOptionsItemSelected(item))
+        if(t.onOptionsItemSelected(item))// en haut à gauche, le Drawer s'affiche
             return true;
 
         return super.onOptionsItemSelected(item);
     }
-
-    /*public void displayView(int viewId) {
-
-        Fragment fragment = null;
-        String title = getString(R.string.app_name);
-
-        switch (viewId) {
-            case R.id.account:
-                fragment = new AccountFragment();
-                title  = "News";
-
-                break;
-            case R.id.settings:
-                fragment = new SettingsFragment();
-                title = "Events";
-                break;
-
-        }
-
-        if (fragment != null) {
-            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-            ft.replace(R.id.activity_main_frame_layout, fragment);
-            ft.commit();
-        }
-
-        // set the toolbar title
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().setTitle(title);
-        }
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.activity_main);
-        drawer.closeDrawer(GravityCompat.START);
-
-    }*/
 }

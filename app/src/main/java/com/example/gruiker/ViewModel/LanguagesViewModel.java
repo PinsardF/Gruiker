@@ -1,16 +1,16 @@
-package com.example.gruiker;
+package com.example.gruiker.ViewModel;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class TwitterViewModel extends ViewModel {
+public class LanguagesViewModel extends ViewModel {
 
     private MutableLiveData<String> mText;
 
-    public TwitterViewModel() {
+    public LanguagesViewModel() {
         mText = new MutableLiveData<>();
-        mText.setValue("Here will be displayed tweets");
+        mText.setValue("Liste des langages");
     }
 
     public LiveData<String> getText() {

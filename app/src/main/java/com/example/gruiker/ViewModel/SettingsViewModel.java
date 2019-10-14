@@ -1,4 +1,4 @@
-package com.example.gruiker;
+package com.example.gruiker.ViewModel;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
