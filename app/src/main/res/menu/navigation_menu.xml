@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:id="@+id/twitter"
+        android:icon="@drawable/loupe"
+        android:title="Tweets"/>
+
+    <item android:id="@+id/language"
+        android:icon="@drawable/book"
+        android:title="Langages"/>
+
+    <item android:id="@+id/settings"
+        android:icon="@drawable/ic_menu_manage"
+        android:title="Settings"/>
+</menu>
