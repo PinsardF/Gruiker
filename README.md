@@ -1,5 +1,6 @@
 # Gruiker
 *School Project : Mobile Programming (ESIEA 4th Year)*
+
 You stay on your phone all day looking at tweets ; but have you thought about your pet who feels bored and alone ?
 Of course, some people would recommand to spend less time on your phone and take care of your pet. But of course, they're wrong !
 The solution has a name, and this name is Gruiker !
