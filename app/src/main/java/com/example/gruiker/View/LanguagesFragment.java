@@ -24,7 +24,7 @@ public class LanguagesFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
         languagesViewModel = ViewModelProviders.of(this).get(LanguagesViewModel.class);
         View root = inflater.inflate(R.layout.fragment_languages, container, false);
-        final TextView textView = root.findViewById(R.id.text_languages);
+        final TextView textView = root.findViewById(R.id.textView_languages);
         languagesViewModel.getText().observe(this, new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
