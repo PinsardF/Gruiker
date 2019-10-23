@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -29,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
     private NavigationView nv;
     String colorPrimary = "#008577";
     String colorPrimaryDark = "#00574B";
+    String animal_name = "";
 
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
@@ -53,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
 
         colorPrimary = sharedPreferences.getString("current_primarycolor","");//Détermination des couleurs
         colorPrimaryDark = sharedPreferences.getString("current_primarycolordark","");
+        animal_name = sharedPreferences.getString("current_language","");
 
         dl = (DrawerLayout)findViewById(R.id.activity_main);
         t = new ActionBarDrawerToggle(this, dl,R.string.Open, R.string.Close);
@@ -72,6 +75,8 @@ public class MainActivity extends AppCompatActivity {
 
         nv = (NavigationView)findViewById(R.id.nv);//Mise en place du NavigationDrawer
         nv.getHeaderView(0).setBackgroundColor(Color.parseColor(colorPrimary));
+        TextView textView = findViewById(R.id.currentLanguageView);
+        textView.setText(animal_name);
         nv.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -80,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
                 switch(id)
                 {
                     case R.id.language:
-                        fragment = new LanguagesFragment(colorPrimary);
+                        fragment = new LanguagesFragment();
                         break;
                     case R.id.settings:
                         fragment = new SettingsFragment();
