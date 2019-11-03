@@ -3,8 +3,11 @@ package com.example.gruiker.Model;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -28,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
     private NavigationView nv;
     String colorPrimary = "#008577";
     String colorPrimaryDark = "#00574B";
+    String animal_name = "";
 
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
@@ -42,16 +46,17 @@ public class MainActivity extends AppCompatActivity {
         String current_language = sharedPreferences.getString("current_language","");
         if(current_language.equals("")){
             editor.putString("current_language","Cochon");
-            editor.putString("current_primarycolor","#D81B60");
+            editor.putString("current_primarycolor","#FF9ECE");
             editor.putString("current_primarycolordark","#FF69B4");
-            editor.putString("current_beginning","Gr");
+            editor.putString("current_beginning","gr");
             editor.putString("current_middle","u");
             editor.putString("current_ending","ik");
             editor.apply();
-        }//else{}   Changer le thème pour celui resté dans le cache
+        }
 
         colorPrimary = sharedPreferences.getString("current_primarycolor","");//Détermination des couleurs
         colorPrimaryDark = sharedPreferences.getString("current_primarycolordark","");
+        animal_name = sharedPreferences.getString("current_language","");
 
         dl = (DrawerLayout)findViewById(R.id.activity_main);
         t = new ActionBarDrawerToggle(this, dl,R.string.Open, R.string.Close);
@@ -61,13 +66,19 @@ public class MainActivity extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        //Couleur de la barre d'action
+        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor(colorPrimaryDark)));
+
         Fragment fragment = new TwitterFragment();//Affichage du Fragment par défaut (le Fragment TwitterFragment)
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.activity_main_frame_layout, fragment);
         ft.commit();
 
         nv = (NavigationView)findViewById(R.id.nv);//Mise en place du NavigationDrawer
-        nv.getHeaderView(0).setBackgroundColor(Color.parseColor("#FF69B4"));
+        nv.getHeaderView(0).setBackgroundColor(Color.parseColor(colorPrimary));
+        View header = nv.getHeaderView(0);
+        TextView textView = header.findViewById(R.id.currentLanguageView);
+        textView.setText(animal_name);
         nv.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
