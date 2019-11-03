@@ -52,7 +52,7 @@ public class TwitterFragment extends Fragment {
 
         sharedPreferences = getContext().getSharedPreferences("", Context.MODE_PRIVATE);
 
-        translated = false;
+        translated = true;
         switch_lang();
         return root;
     }
@@ -66,7 +66,6 @@ public class TwitterFragment extends Fragment {
         Boolean first_word;
 
         String[] sentences = text.split("\\.|\\?");//     ".|\\?"
-        int indice_mot;
         Boolean first_sentence=true;
         for(String sentence : sentences) {
             first_word = true;
