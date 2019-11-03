@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -47,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
             editor.putString("current_language","Cochon");
             editor.putString("current_primarycolor","#FF9ECE");
             editor.putString("current_primarycolordark","#FF69B4");
-            editor.putString("current_beginning","Gr");
+            editor.putString("current_beginning","gr");
             editor.putString("current_middle","u");
             editor.putString("current_ending","ik");
             editor.apply();
@@ -75,7 +76,8 @@ public class MainActivity extends AppCompatActivity {
 
         nv = (NavigationView)findViewById(R.id.nv);//Mise en place du NavigationDrawer
         nv.getHeaderView(0).setBackgroundColor(Color.parseColor(colorPrimary));
-        TextView textView = findViewById(R.id.currentLanguageView);
+        View header = nv.getHeaderView(0);
+        TextView textView = header.findViewById(R.id.currentLanguageView);
         textView.setText(animal_name);
         nv.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override

@@ -34,6 +34,10 @@ public class LanguagesFragment extends Fragment {
 
     String colorPrimary;
     String colorPrimaryDark;
+    String animal_name;
+    String begin;
+    String middle;
+    String ending;
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
 
@@ -45,6 +49,10 @@ public class LanguagesFragment extends Fragment {
         languagesViewModel = ViewModelProviders.of(this).get(LanguagesViewModel.class);
         final View root = inflater.inflate(R.layout.fragment_languages, container, false);
 
+        sharedPreferences = getContext().getSharedPreferences("", Context.MODE_PRIVATE);
+        System.out.println("VAR : "+ sharedPreferences.getString("current_language",""));
+        //Coucou petit stalker
+
         dl = (DrawerLayout)getActivity().findViewById(R.id.activity_main);
         nv = (NavigationView)getActivity().findViewById(R.id.nv);
 
@@ -53,7 +61,7 @@ public class LanguagesFragment extends Fragment {
         languages_list.add("Chat");
         languages_list.add("Chien");
 
-        sharedPreferences = getContext().getSharedPreferences("", Context.MODE_PRIVATE);//récupération des couleurs
+        //sharedPreferences = getContext().getSharedPreferences("", Context.MODE_PRIVATE);//récupération des couleurs
         editor = sharedPreferences.edit();
         colorPrimary = sharedPreferences.getString("current_primarycolor","");
         colorPrimaryDark = sharedPreferences.getString("current_primarycolordark","");
@@ -71,22 +79,40 @@ public class LanguagesFragment extends Fragment {
                     case 0:
                         colorPrimary = "#FF9ECE";
                         colorPrimaryDark = "#FF69B4";
+                        animal_name = "Cochon";
+                        begin = "gr";
+                        middle = "u";
+                        ending = "ik";
                         break;
                     case 1:
                         colorPrimary = "#9B84FF";
                         colorPrimaryDark = "#8569FF";
+                        animal_name = "Chat";
+                        begin = "mi";
+                        middle = "a";
+                        ending = "ou";
                         break;
                     case 2:
                         colorPrimary = "#FE8F7A";
                         colorPrimaryDark = "#FF7D64";
+                        animal_name = "Chien";
+                        begin = "ou";
+                        middle = "a";
+                        ending = "f";
                         break;
                 }
                 editor.putString("current_primarycolor",colorPrimary);
                 editor.putString("current_primarycolordark",colorPrimaryDark);
+                editor.putString("current_language","");
+                editor.putString("current_beginning","");
+                editor.putString("current_middle","");
+                editor.putString("current_ending","");
                 editor.apply();
+                String var_test = sharedPreferences.getString("current_language","");
                 spinner.setBackgroundColor(Color.parseColor(colorPrimary));
                 nv.getHeaderView(0).setBackgroundColor(Color.parseColor(colorPrimary));
-                Toast.makeText(getActivity(), "ho", Toast.LENGTH_SHORT).show();
+                TextView textView_animal = nv.getHeaderView(0).findViewById(R.id.currentLanguageView);
+                textView_animal.setText(var_test);
             }
 
             @Override

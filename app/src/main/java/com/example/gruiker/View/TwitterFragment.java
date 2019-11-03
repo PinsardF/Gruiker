@@ -1,5 +1,7 @@
 package com.example.gruiker.View;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,6 +24,8 @@ public class TwitterFragment extends Fragment {
     private TwitterViewModel twitterViewModel;
     private Boolean translated;
     private TextView textView;
+    SharedPreferences sharedPreferences;
+    SharedPreferences.Editor editor;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -50,6 +54,11 @@ public class TwitterFragment extends Fragment {
     }
 
     private String language(String text){
+        sharedPreferences = getContext().getSharedPreferences("", Context.MODE_PRIVATE);
+        String begin = sharedPreferences.getString("current_beginning","");
+        String middle = sharedPreferences.getString("current_middle","");
+        String ending = sharedPreferences.getString("current_ending","");
+
         String new_text = "";
         Boolean first_word = false;
 
@@ -65,14 +74,15 @@ public class TwitterFragment extends Fragment {
                 for (String word : words) {//traitement du mot
                     if (word.length() > 4) {
                         if(first_word){
-                            new_word = "Gr";
+                            //String upper_begin = begin.substring(0,1).toUpperCase() + begin.substring(1);
+                            new_word = begin;//upper_begin
                         } else {
-                            new_word = "gr";
+                            new_word = begin;
                         }
                         for (int i = 0; i < word.length() - 4; i++) {
-                            new_word += "u";
+                            new_word += middle;
                         }
-                        new_word += "ik";
+                        new_word += ending;
                     } else {
                         new_word = word;
                     }
