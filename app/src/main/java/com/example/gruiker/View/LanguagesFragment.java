@@ -50,8 +50,6 @@ public class LanguagesFragment extends Fragment {
         final View root = inflater.inflate(R.layout.fragment_languages, container, false);
 
         sharedPreferences = getContext().getSharedPreferences("", Context.MODE_PRIVATE);
-        System.out.println("VAR : "+ sharedPreferences.getString("current_language",""));
-        //Coucou petit stalker
 
         dl = (DrawerLayout)getActivity().findViewById(R.id.activity_main);
         nv = (NavigationView)getActivity().findViewById(R.id.nv);
@@ -103,16 +101,14 @@ public class LanguagesFragment extends Fragment {
                 }
                 editor.putString("current_primarycolor",colorPrimary);
                 editor.putString("current_primarycolordark",colorPrimaryDark);
-                editor.putString("current_language","");
-                editor.putString("current_beginning","");
-                editor.putString("current_middle","");
-                editor.putString("current_ending","");
+                editor.putString("current_language",animal_name);
+                editor.putString("current_beginning",begin);
+                editor.putString("current_middle",middle);
+                editor.putString("current_ending",ending);
                 editor.apply();
-                String var_test = sharedPreferences.getString("current_language","");
                 spinner.setBackgroundColor(Color.parseColor(colorPrimary));
                 nv.getHeaderView(0).setBackgroundColor(Color.parseColor(colorPrimary));
                 TextView textView_animal = nv.getHeaderView(0).findViewById(R.id.currentLanguageView);
-                textView_animal.setText(var_test);
             }
 
             @Override
@@ -121,7 +117,6 @@ public class LanguagesFragment extends Fragment {
 
             }
         });
-
         return root;
     }
 

@@ -48,13 +48,15 @@ public class TwitterFragment extends Fragment {
             }
         });
 
+        sharedPreferences = getContext().getSharedPreferences("", Context.MODE_PRIVATE);
+
         translated = false;
         switch_lang();
         return root;
     }
 
     private String language(String text){
-        sharedPreferences = getContext().getSharedPreferences("", Context.MODE_PRIVATE);
+        //sharedPreferences = getContext().getSharedPreferences("", Context.MODE_PRIVATE);   INUTILE
         String begin = sharedPreferences.getString("current_beginning","");
         String middle = sharedPreferences.getString("current_middle","");
         String ending = sharedPreferences.getString("current_ending","");
