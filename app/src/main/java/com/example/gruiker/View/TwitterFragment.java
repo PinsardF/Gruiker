@@ -19,6 +19,8 @@ import androidx.lifecycle.ViewModelProviders;
 import com.example.gruiker.R;
 import com.example.gruiker.ViewModel.TwitterViewModel;
 
+import java.util.Collection;
+
 public class TwitterFragment extends Fragment {
 
     private TwitterViewModel twitterViewModel;
@@ -56,39 +58,46 @@ public class TwitterFragment extends Fragment {
     }
 
     private String language(String text){
-        //sharedPreferences = getContext().getSharedPreferences("", Context.MODE_PRIVATE);   INUTILE
         String begin = sharedPreferences.getString("current_beginning","");
         String middle = sharedPreferences.getString("current_middle","");
         String ending = sharedPreferences.getString("current_ending","");
 
         String new_text = "";
-        Boolean first_word = false;
+        Boolean first_word;
 
         String[] sentences = text.split("\\.|\\?");//     ".|\\?"
+        int indice_mot;
+        Boolean first_sentence=true;
         for(String sentence : sentences) {
             first_word = true;
             String new_sentence = "";
+
+            if(!first_sentence){
+                sentence = sentence.substring(1);
+            } else{
+                first_sentence = false;
+            }
+
             String[] propositions = sentence.split(", ");
             for (String proposition : propositions) {//traitement des propositions (",")
                 String new_proposition = "";
                 String[] words = proposition.split(" ");
                 String new_word = "";
                 for (String word : words) {//traitement du mot
-                    if (word.length() > 4) {
+                    if (word.length() >= begin.length() + middle.length() + ending.length()) {
                         if(first_word){
-                            //String upper_begin = begin.substring(0,1).toUpperCase() + begin.substring(1);
-                            new_word = begin;//upper_begin
+                            String upper_begin = begin.substring(0,1).toUpperCase() + begin.substring(1);
+                            new_word = upper_begin;
                         } else {
                             new_word = begin;
                         }
-                        for (int i = 0; i < word.length() - 4; i++) {
+                        for (int i = 0; i < word.length() - begin.length() - ending.length(); i++) {
                             new_word += middle;
                         }
                         new_word += ending;
                     } else {
                         new_word = word;
                     }
-
                     first_word = false;
 
                     new_word += " ";
