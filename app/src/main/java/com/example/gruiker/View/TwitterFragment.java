@@ -16,10 +16,17 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.example.gruiker.HeaderInterceptor;
 import com.example.gruiker.R;
 import com.example.gruiker.ViewModel.TwitterViewModel;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import java.util.Collection;
+import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class TwitterFragment extends Fragment {
 
@@ -41,7 +48,7 @@ public class TwitterFragment extends Fragment {
                 textView.setText(s);
             }
         });
-
+        generateTweets();
         Button button = root.findViewById(R.id.trad_button);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -55,6 +62,27 @@ public class TwitterFragment extends Fragment {
         translated = true;
         switch_lang();
         return root;
+    }
+
+    private String generateTweets(){
+        String text = "TWEETS:";
+        String BASE_URL = "https://api.twitter.com/";
+
+        HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+        logging.setLevel(HttpLoggingInterceptor.Level.BASIC);
+
+        OkHttpClient client = new OkHttpClient.Builder()
+                .addInterceptor(logging)
+                .addInterceptor(new HeaderInterceptor())
+                .build();
+
+        Gson gson = new GsonBuilder().setLenient().create();
+        Retrofit.Builder retrofitbuilder = new Retrofit.Builder()
+                .baseUrl(BASE_URL)
+                .client(client);
+        Retrofit retrofit = retrofitbuilder.build();
+        //CONTINUER ICI
+        return text;
     }
 
     private String language(String text){
