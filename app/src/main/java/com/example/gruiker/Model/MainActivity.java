@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -117,6 +118,12 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
+    }
+
+    public void changeColor(String color){
+        Drawable drawable = getDrawable(R.drawable.toolbar);
+        drawable.setTint(Color.parseColor(color));
+        getSupportActionBar().setBackgroundDrawable(drawable);
     }
 
     @Override

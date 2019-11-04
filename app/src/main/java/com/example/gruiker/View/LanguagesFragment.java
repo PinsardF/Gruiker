@@ -69,6 +69,7 @@ public class LanguagesFragment extends Fragment {
         adapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
         spinner.setBackgroundColor(Color.parseColor(colorPrimary));
+        spinner.setSelection(sharedPreferences.getInt("current_id",0));
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
             @Override
@@ -81,6 +82,7 @@ public class LanguagesFragment extends Fragment {
                         begin = "gr";
                         middle = "u";
                         ending = "ik";
+
                         break;
                     case 1:
                         colorPrimary = "#9B84FF";
@@ -105,10 +107,15 @@ public class LanguagesFragment extends Fragment {
                 editor.putString("current_beginning",begin);
                 editor.putString("current_middle",middle);
                 editor.putString("current_ending",ending);
+                editor.putInt("current_id",position);
                 editor.apply();
                 spinner.setBackgroundColor(Color.parseColor(colorPrimary));
                 nv.getHeaderView(0).setBackgroundColor(Color.parseColor(colorPrimary));
                 TextView textView_animal = nv.getHeaderView(0).findViewById(R.id.currentLanguageView);
+                textView_animal.setText(animal_name);
+                spinner.setSelection(position);
+                MainActivity activity = (MainActivity) getActivity();
+                activity.changeColor(colorPrimaryDark);
             }
 
             @Override
@@ -117,6 +124,8 @@ public class LanguagesFragment extends Fragment {
 
             }
         });
+
+
         return root;
     }
 
