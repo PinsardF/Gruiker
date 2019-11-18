@@ -17,9 +17,9 @@ public class HeaderInterceptor
                 .addHeader("oauth_token","894924079-NXWhgTM8wwhP5Ayy8kZf01HNqvtPu4fX3xcsk2ol")
                 .addHeader("oauth_signature_method","HMAC-SHA1")
                 .addHeader("timestamp", String.valueOf(System.currentTimeMillis()))
-                //.addheader("oauth_nonce","???")
+                .addHeader("oauth_nonce","TQkaRTHzyEG")
                 .addHeader("oauth_version","1.0")
-                //.addheader("oauth_signature","???")
+                .addHeader("oauth_signature","agoDctVP0N40cn7T6nnk%2FZkhObU%3D")
                 .build();
         Response response = chain.proceed(request);
         return response;

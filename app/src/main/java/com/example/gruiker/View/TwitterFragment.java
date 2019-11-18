@@ -3,6 +3,7 @@ package com.example.gruiker.View;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,14 +18,24 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.example.gruiker.HeaderInterceptor;
+import com.example.gruiker.Model.MainActivity;
+import com.example.gruiker.Model.Tweet;
+import com.example.gruiker.Model.TweetApi;
 import com.example.gruiker.R;
 import com.example.gruiker.ViewModel.TwitterViewModel;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
+import com.twitter.sdk.android.core.internal.TwitterApi;
 
 import java.util.Collection;
+import java.util.List;
+
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -35,6 +46,7 @@ public class TwitterFragment extends Fragment {
     private TextView textView;
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
+
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -48,12 +60,18 @@ public class TwitterFragment extends Fragment {
                 textView.setText(s);
             }
         });
-        generateTweets();
         Button button = root.findViewById(R.id.trad_button);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 switch_lang();
+            }
+        });
+        Button search_button = root.findViewById(R.id.search_button);
+        search_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                generateTweets();
             }
         });
 
@@ -72,17 +90,49 @@ public class TwitterFragment extends Fragment {
         logging.setLevel(HttpLoggingInterceptor.Level.BASIC);
 
         OkHttpClient client = new OkHttpClient.Builder()
-                .addInterceptor(logging)
                 .addInterceptor(new HeaderInterceptor())
+                .addInterceptor(logging)
                 .build();
 
         Gson gson = new GsonBuilder().setLenient().create();
         Retrofit.Builder retrofitbuilder = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create(gson))
                 .client(client);
         Retrofit retrofit = retrofitbuilder.build();
-        //CONTINUER ICI
+        TweetApi twitterApi = retrofit.create(TweetApi.class);
+        CallApi(twitterApi);
+        /*
+        List<Tweet> tweets = getTweetsFromDatabase();
+        String test_string = tweets.get(0).getText();
+        textView.setText(test_string);
+        System.out.println(test_string);
+        */
         return text;
+    }
+
+    private List<Tweet> getTweetsFromDatabase(){
+        Gson gson = new Gson();
+        String json = sharedPreferences.getString("Elements","");
+        return gson.fromJson(json, new TypeToken<List<Tweet>>(){}.getType());
+    }
+
+    void CallApi(TweetApi tweetApi){
+        Call<List<Tweet>> call = tweetApi.loadChanges();
+        call.enqueue(new Callback<List<Tweet>>() {
+            @Override
+            public void onResponse(Call<List<Tweet>> call, Response<List<Tweet>> response) {
+                List<Tweet> meubleList = response.body();
+                Gson gson = new Gson();
+                String json = gson.toJson(meubleList);
+                sharedPreferences.edit().putString("Elements",json).putInt("Elements_number",meubleList.size()).apply();
+            }
+
+            @Override
+            public void onFailure(Call<List<Tweet>> call, Throwable t) {
+                Log.d("ERROR", "Api error");
+            }
+        });
     }
 
     private String language(String text){
