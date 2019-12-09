@@ -35,17 +35,15 @@ public class LanguagesFragment extends Fragment {
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
 
-    private LanguagesViewModel languagesViewModel;
-    private DrawerLayout dl;
     private NavigationView nv;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        languagesViewModel = ViewModelProviders.of(this).get(LanguagesViewModel.class);
+        ViewModelProviders.of(this).get(LanguagesViewModel.class);
         final View root = inflater.inflate(R.layout.fragment_languages, container, false);
 
         sharedPreferences = getContext().getSharedPreferences("", Context.MODE_PRIVATE);
 
-        dl = (DrawerLayout)getActivity().findViewById(R.id.activity_main);
+        getActivity().findViewById(R.id.activity_main);
         nv = (NavigationView)getActivity().findViewById(R.id.nv);
 
         ArrayList<String> languages_list = new ArrayList<String>();//Remplissage de la liste de langages
@@ -53,7 +51,6 @@ public class LanguagesFragment extends Fragment {
         languages_list.add("Chat");
         languages_list.add("Chien");
 
-        //sharedPreferences = getContext().getSharedPreferences("", Context.MODE_PRIVATE);//récupération des couleurs
         editor = sharedPreferences.edit();
         colorPrimary = sharedPreferences.getString("current_primarycolor","");
         colorPrimaryDark = sharedPreferences.getString("current_primarycolordark","");
@@ -115,7 +112,6 @@ public class LanguagesFragment extends Fragment {
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
                 // TODO Auto-generated method stub
-
             }
         });
 

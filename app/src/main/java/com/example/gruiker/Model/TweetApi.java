@@ -1,4 +1,4 @@
-package com.example.gruiker.Model;
+package com.example.gruiker.Model;//A SUPPRIMER
 
 import java.util.List;
 

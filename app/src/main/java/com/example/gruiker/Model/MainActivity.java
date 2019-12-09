@@ -1,4 +1,4 @@
-package com.example.gruiker.Model;
+package com.example.gruiker.Model;//CLEAN
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -84,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 int id = item.getItemId();
-                Fragment fragment = null;
+                Fragment fragment;
                 switch(id)
                 {
                     case R.id.language:

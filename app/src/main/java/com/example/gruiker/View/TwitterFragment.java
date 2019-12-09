@@ -83,12 +83,12 @@ public class TwitterFragment extends Fragment {
             }
         });
         Button search_button = root.findViewById(R.id.search_button);
-        search_button.setOnClickListener(new View.OnClickListener() {
+        /*search_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 generateTweets();
             }
-        });
+        });*/
 
         sharedPreferences = getContext().getSharedPreferences("", Context.MODE_PRIVATE);
 
@@ -96,7 +96,7 @@ public class TwitterFragment extends Fragment {
         switch_lang();
         return root;
     }
-
+/*
     private String generateTweets(){
         String text = "TWEETS:";
         String BASE_URL = "https://api.twitter.com/";
@@ -135,12 +135,12 @@ public class TwitterFragment extends Fragment {
         Retrofit retrofit = retrofitbuilder.build();
         TweetApi twitterApi = retrofit.create(TweetApi.class);
         CallApi(twitterApi);
-        /*
+        / *
         List<Tweet> tweets = getTweetsFromDatabase();
         String test_string = tweets.get(0).getText();
         textView.setText(test_string);
         System.out.println(test_string);
-        */
+        * /
         return text;
     }
 
@@ -199,7 +199,8 @@ public class TwitterFragment extends Fragment {
                 List<Tweet> meubleList = response.body();
                 Gson gson = new Gson();
                 String json = gson.toJson(meubleList);
-                sharedPreferences.edit().putString("Elements",json).putInt("Elements_number",meubleList.size()).apply();
+                System.out.println("JSON : "+json);
+                //sharedPreferences.edit().putString("Elements",json).putInt("Elements_number",meubleList.size()).apply();
             }
 
             @Override
@@ -208,7 +209,7 @@ public class TwitterFragment extends Fragment {
             }
         });
     }
-
+*/
     private String language(String text){
         String begin = sharedPreferences.getString("current_beginning","");
         String middle = sharedPreferences.getString("current_middle","");
