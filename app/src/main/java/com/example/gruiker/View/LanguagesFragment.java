@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -17,6 +18,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.example.gruiker.Model.GetDataController;
 import com.example.gruiker.R;
 import com.example.gruiker.ViewModel.LanguagesViewModel;
 import com.google.android.material.navigation.NavigationView;
@@ -36,6 +38,7 @@ public class LanguagesFragment extends Fragment {
     SharedPreferences.Editor editor;
 
     private NavigationView nv;
+    private GetDataController getDataController;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         ViewModelProviders.of(this).get(LanguagesViewModel.class);
@@ -115,8 +118,9 @@ public class LanguagesFragment extends Fragment {
             }
         });
 
+        getDataController = new GetDataController(this);
+        getDataController.onCreate();
 
         return root;
     }
-
 }

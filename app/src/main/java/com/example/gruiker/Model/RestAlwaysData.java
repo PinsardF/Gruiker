@@ -42,7 +42,6 @@ public class RestAlwaysData {
                     .build();
             restService = retrofit.create(RestService.class);
         }
-
         return restService;
     }
 

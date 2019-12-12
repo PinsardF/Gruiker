@@ -4,16 +4,17 @@ import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.POST;
 
 public interface RestService {
 
     @FormUrlEncoded
-    @GET("getData.php")
-    Call<Tweet> getData();
+    @POST("getData.php")
+    Call<Animal> getData(@Field("obligatoire") String obligatoire);
 
     @FormUrlEncoded
-    @GET("sendData.php")
-    Call<Tweet> sendData(@Field("name") String name, @Field("primary_color") String primary_color,
+    @POST("sendData.php")
+    Call<Animal> sendData(@Field("name") String name, @Field("primary_color") String primary_color,
                         @Field("primary_color_dark") String primary_color_dark, @Field("beginning") String beginning,
                         @Field("middle") String middle, @Field("ending") String ending);
 }
