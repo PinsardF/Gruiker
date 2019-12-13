@@ -1,5 +1,7 @@
 package com.example.gruiker.Model;
 
+import java.util.List;
+
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
@@ -10,7 +12,7 @@ public interface RestService {
 
     @FormUrlEncoded
     @POST("getData.php")
-    Call<Animal> getData(@Field("obligatoire") String obligatoire);
+    Call<ListAnimal> getData(@Field("obligatoire") String obligatoire);
 
     @FormUrlEncoded
     @POST("sendData.php")

@@ -18,12 +18,18 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.example.gruiker.Model.Animal;
 import com.example.gruiker.Model.GetDataController;
+import com.example.gruiker.Model.ListAnimal;
 import com.example.gruiker.R;
 import com.example.gruiker.ViewModel.LanguagesViewModel;
 import com.google.android.material.navigation.NavigationView;
+import com.google.gson.Gson;
+import com.google.gson.JsonDeserializationContext;
+import com.google.gson.JsonDeserializer;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class LanguagesFragment extends Fragment {
@@ -46,17 +52,25 @@ public class LanguagesFragment extends Fragment {
 
         sharedPreferences = getContext().getSharedPreferences("", Context.MODE_PRIVATE);
 
+        getDataController = new GetDataController(this);//Appel du Controller pour récupérer les données
+        getDataController.onCreate();
+
         getActivity().findViewById(R.id.activity_main);
         nv = (NavigationView)getActivity().findViewById(R.id.nv);
 
+        String animals_list_json = sharedPreferences.getString("animals_list","");//Récupération des nouvelles
+        Gson gson = new Gson();//données envoyées en cache
+        final List<Animal> animals_list = gson.fromJson(animals_list_json,ListAnimal.class).getAnimals_list();
+
         ArrayList<String> languages_list = new ArrayList<String>();//Remplissage de la liste de langages
-        languages_list.add("Cochon");
-        languages_list.add("Chat");
-        languages_list.add("Chien");
+        for(int i=0;i<animals_list.size();i++) {
+            languages_list.add(animals_list.get(i).getName());
+        }
 
         editor = sharedPreferences.edit();
         colorPrimary = sharedPreferences.getString("current_primarycolor","");
         colorPrimaryDark = sharedPreferences.getString("current_primarycolordark","");
+
 
         final Spinner spinner = (Spinner) root.findViewById(R.id.languages_selector);
         ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(),R.layout.support_simple_spinner_dropdown_item,languages_list);
@@ -68,33 +82,14 @@ public class LanguagesFragment extends Fragment {
 
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
-                switch(position){
-                    case 0:
-                        colorPrimary = "#FF9ECE";
-                        colorPrimaryDark = "#FF69B4";
-                        animal_name = "Cochon";
-                        begin = "gr";
-                        middle = "u";
-                        ending = "ik";
 
-                        break;
-                    case 1:
-                        colorPrimary = "#9B84FF";
-                        colorPrimaryDark = "#8569FF";
-                        animal_name = "Chat";
-                        begin = "mi";
-                        middle = "a";
-                        ending = "ou";
-                        break;
-                    case 2:
-                        colorPrimary = "#FE8F7A";
-                        colorPrimaryDark = "#FF7D64";
-                        animal_name = "Chien";
-                        begin = "ou";
-                        middle = "a";
-                        ending = "f";
-                        break;
-                }
+                colorPrimary = animals_list.get(position).getPrimary_color();
+                colorPrimaryDark = animals_list.get(position).getPrimary_color_dark();
+                animal_name = animals_list.get(position).getName();
+                begin = animals_list.get(position).getBeginning();
+                middle = animals_list.get(position).getMiddle();
+                ending = animals_list.get(position).getEnding();
+
                 editor.putString("current_primarycolor",colorPrimary);
                 editor.putString("current_primarycolordark",colorPrimaryDark);
                 editor.putString("current_language",animal_name);
@@ -117,9 +112,6 @@ public class LanguagesFragment extends Fragment {
                 // TODO Auto-generated method stub
             }
         });
-
-        getDataController = new GetDataController(this);
-        getDataController.onCreate();
 
         return root;
     }
