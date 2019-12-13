@@ -37,14 +37,11 @@ public class GetDataController {
             @Override
             public void onResponse(@NonNull Call<ListAnimal> call, @NonNull Response<ListAnimal> response){
                 if(response.isSuccessful()){
-                    //final List<Animal> animal = response.body().getAnimals_list();
                     final ListAnimal animal = response.body();
                     assert animal != null;
                     String animals_list_json = new Gson().toJson(animal);
                     editor.putString("animals_list",animals_list_json);
                     editor.apply();
-                    //System.out.println("ANIMAL:"+sharedPreferences.getString("animals_list",""));
-                    System.out.println("UPDATE DATA");
 
                 } else{
                     System.out.println("La response a échoué");

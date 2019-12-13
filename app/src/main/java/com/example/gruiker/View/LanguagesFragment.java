@@ -3,6 +3,7 @@ package com.example.gruiker.View;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.net.VpnService;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -55,6 +56,9 @@ public class LanguagesFragment extends Fragment {
         getDataController = new GetDataController(this);//Appel du Controller pour récupérer les données
         getDataController.onCreate();
 
+        final Button add_button = root.findViewById(R.id.add_button);
+        Button del_button = root.findViewById(R.id.del_button);
+
         getActivity().findViewById(R.id.activity_main);
         nv = (NavigationView)getActivity().findViewById(R.id.nv);
 
@@ -70,6 +74,7 @@ public class LanguagesFragment extends Fragment {
         editor = sharedPreferences.edit();
         colorPrimary = sharedPreferences.getString("current_primarycolor","");
         colorPrimaryDark = sharedPreferences.getString("current_primarycolordark","");
+        add_button.setBackgroundColor(Color.parseColor(colorPrimary));
 
 
         final Spinner spinner = (Spinner) root.findViewById(R.id.languages_selector);
@@ -105,6 +110,7 @@ public class LanguagesFragment extends Fragment {
                 spinner.setSelection(position);
                 com.example.gruiker.Model.MainActivity activity = (com.example.gruiker.Model.MainActivity) getActivity();
                 activity.changeColor(colorPrimaryDark);
+                add_button.setBackgroundColor(Color.parseColor(colorPrimary));
             }
 
             @Override
