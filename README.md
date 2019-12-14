@@ -6,7 +6,7 @@ Malheureusement, n'arrivant pas à utiliser l'API Twitter malgré de nombreuses 
 
 # Vue Principale
 
-![Test image](http://i.imgur.com/KBHVNwc)
+![Test image](https://i.imgur.com/244bt5R.png)
 
 -----------------------------------------------------------------------------------------------------------------------------------
 
