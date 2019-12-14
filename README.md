@@ -14,6 +14,17 @@ La vue principale affiche le texte, et le bouton LANG permet de passer de "tradu
 ![](https://i.imgur.com/6YjxXI7.png)
 La NavBar possède 3 onglets : l'onglet Tweets qui affiche le texte traduisible, l'onglet Langages qui permet de changer, créer ou supprimer des langages, et l'onglet Settings, utile uniquement au développeur.
 
+# Langages
+
+![](https://i.imgur.com/gCcr2sX.png)
+![](https://i.imgur.com/D1hQpzd.png)
+L'onglet permet de choisir un langage avec le Spinner au milieu. Il s'applique alors à l'application et peut être supprimé avec le bouton SUPPRIMER. On peut également remplir les champs pour AJOUTER un langage.
+
+En changeant de langage, les couleurs de l'application changent :
+![](https://i.imgur.com/qDbon2P.png)
+
+Les langages sont hébergés dans une Base de Données AlwaysData.
+
 -----------------------------------------------------------------------------------------------------------------------------------
 
 You stay on your phone all day looking at tweets ; but have you thought about your pet who feels bored and alone ?
