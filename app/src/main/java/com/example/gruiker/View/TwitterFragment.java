@@ -3,7 +3,6 @@ package com.example.gruiker.View;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,46 +12,11 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
-import com.example.gruiker.HeaderInterceptor;
-import com.example.gruiker.Model.MainActivity;
-import com.example.gruiker.Model.Tweet;
-import com.example.gruiker.Model.TweetApi;
 import com.example.gruiker.R;
 import com.example.gruiker.ViewModel.TwitterViewModel;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.reflect.TypeToken;
-import com.twitter.sdk.android.core.internal.TwitterApi;
-
-import java.security.SecureRandom;
-import java.security.cert.CertificateException;
-import java.security.cert.X509Certificate;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
-
-import javax.net.ssl.HostnameVerifier;
-import javax.net.ssl.HttpsURLConnection;
-import javax.net.ssl.SSLContext;
-import javax.net.ssl.SSLSession;
-import javax.net.ssl.SSLSocketFactory;
-import javax.net.ssl.TrustManager;
-import javax.net.ssl.X509TrustManager;
-
-import okhttp3.CipherSuite;
-import okhttp3.ConnectionSpec;
-import okhttp3.OkHttpClient;
-import okhttp3.TlsVersion;
-import okhttp3.logging.HttpLoggingInterceptor;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class TwitterFragment extends Fragment {
 
@@ -96,120 +60,7 @@ public class TwitterFragment extends Fragment {
         switch_lang();
         return root;
     }
-/*
-    private String generateTweets(){
-        String text = "TWEETS:";
-        String BASE_URL = "https://api.twitter.com/";
 
-        HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
-        logging.setLevel(HttpLoggingInterceptor.Level.BASIC);
-
-        OkHttpClient.Builder builder = new OkHttpClient.Builder()
-                .addInterceptor(new HeaderInterceptor())
-                .addInterceptor(logging);
-
-        trustAllCertificates(builder);
-
-
-        ConnectionSpec spec = new ConnectionSpec.Builder(ConnectionSpec.MODERN_TLS)
-                .tlsVersions(TlsVersion.TLS_1_2)
-                .cipherSuites(
-                        CipherSuite.TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256,
-                        CipherSuite.TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256,
-                        CipherSuite.TLS_DHE_RSA_WITH_AES_128_GCM_SHA256,
-                        CipherSuite.TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA,
-                        CipherSuite.TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA,
-                        CipherSuite.TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA,
-                        CipherSuite.TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA,
-                        CipherSuite.TLS_ECDHE_ECDSA_WITH_RC4_128_SHA,
-                        CipherSuite.TLS_ECDHE_RSA_WITH_RC4_128_SHA,
-                        CipherSuite.TLS_DHE_RSA_WITH_AES_128_CBC_SHA)
-                .build();
-        builder.connectionSpecs(Collections.singletonList(spec));
-
-        Gson gson = new GsonBuilder().setLenient().create();
-        Retrofit.Builder retrofitbuilder = new Retrofit.Builder()
-                .baseUrl(BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create(gson))
-                .client(builder.build());
-        Retrofit retrofit = retrofitbuilder.build();
-        TweetApi twitterApi = retrofit.create(TweetApi.class);
-        CallApi(twitterApi);
-        / *
-        List<Tweet> tweets = getTweetsFromDatabase();
-        String test_string = tweets.get(0).getText();
-        textView.setText(test_string);
-        System.out.println(test_string);
-        * /
-        return text;
-    }
-
-
-    private static OkHttpClient trustAllCertificates(OkHttpClient.Builder builder) {
-        try {
-            // Create a trust manager that does not validate certificate chains
-            final TrustManager[] trustAllCerts = new TrustManager[] {
-                    new X509TrustManager() {
-                        @Override
-                        public void checkClientTrusted(java.security.cert.X509Certificate[] chain, String authType) throws CertificateException {
-                        }
-
-                        @Override
-                        public void checkServerTrusted(java.security.cert.X509Certificate[] chain, String authType) throws CertificateException {
-                        }
-
-                        @Override
-                        public java.security.cert.X509Certificate[] getAcceptedIssuers() {
-                            X509Certificate[] cArrr = new X509Certificate[0];
-                            return cArrr;                        }
-                    }
-            };
-
-            // Install the all-trusting trust manager
-            final SSLContext sslContext = SSLContext.getInstance("TLSv1.2");
-            sslContext.init(null, trustAllCerts, new java.security.SecureRandom());
-            // Create an ssl socket factory with our all-trusting manager
-            final SSLSocketFactory sslSocketFactory = sslContext.getSocketFactory();
-
-            builder.sslSocketFactory(sslSocketFactory, (X509TrustManager)trustAllCerts[0]);
-            builder.hostnameVerifier(new HostnameVerifier() {
-                @Override
-                public boolean verify(String hostname, SSLSession session) {
-                    return true;
-                }
-            });
-
-            OkHttpClient okHttpClient = builder.build();
-            return okHttpClient;
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
-    private List<Tweet> getTweetsFromDatabase(){
-        Gson gson = new Gson();
-        String json = sharedPreferences.getString("Elements","");
-        return gson.fromJson(json, new TypeToken<List<Tweet>>(){}.getType());
-    }
-
-    void CallApi(TweetApi tweetApi){
-        Call<List<Tweet>> call = tweetApi.loadChanges();
-        call.enqueue(new Callback<List<Tweet>>() {
-            @Override
-            public void onResponse(Call<List<Tweet>> call, Response<List<Tweet>> response) {
-                List<Tweet> meubleList = response.body();
-                Gson gson = new Gson();
-                String json = gson.toJson(meubleList);
-                System.out.println("JSON : "+json);
-                //sharedPreferences.edit().putString("Elements",json).putInt("Elements_number",meubleList.size()).apply();
-            }
-
-            @Override
-            public void onFailure(Call<List<Tweet>> call, Throwable t) {
-                Log.d("ERROR", "Api error");
-            }
-        });
-    }
-*/
     private String language(String text){
         String begin = sharedPreferences.getString("current_beginning","");
         String middle = sharedPreferences.getString("current_middle","");
@@ -281,8 +132,5 @@ public class TwitterFragment extends Fragment {
             translated = true;
         }
         textView.setText(text);
-
-        /*mText = new MutableLiveData<>();
-        mText.setValue(text);*/
     }
 }

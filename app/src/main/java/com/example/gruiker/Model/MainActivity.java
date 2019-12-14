@@ -1,4 +1,4 @@
-package com.example.gruiker.Model;//CLEAN
+package com.example.gruiker.Model;
 
 import android.content.Context;
 import android.content.SharedPreferences;

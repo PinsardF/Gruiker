@@ -2,8 +2,6 @@ package com.example.gruiker.Model;
 
 import com.example.gruiker.View.LanguagesFragment;
 
-import retrofit2.Call;
-
 public class SendAnimalController {
 
     private LanguagesFragment activity;

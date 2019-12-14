@@ -3,7 +3,6 @@ package com.example.gruiker.View;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Color;
-import android.net.VpnService;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,11 +15,11 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.example.gruiker.Model.Animal;
+import com.example.gruiker.Model.DelAnimalController;
 import com.example.gruiker.Model.GetDataController;
 import com.example.gruiker.Model.ListAnimal;
 import com.example.gruiker.Model.SendAnimalController;
@@ -28,8 +27,6 @@ import com.example.gruiker.R;
 import com.example.gruiker.ViewModel.LanguagesViewModel;
 import com.google.android.material.navigation.NavigationView;
 import com.google.gson.Gson;
-import com.google.gson.JsonDeserializationContext;
-import com.google.gson.JsonDeserializer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,6 +51,7 @@ public class LanguagesFragment extends Fragment implements View.OnClickListener{
     private NavigationView nv;
     private GetDataController getDataController;
     private SendAnimalController sendAnimalController;
+    private DelAnimalController delAnimalController;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         ViewModelProviders.of(this).get(LanguagesViewModel.class);
@@ -64,7 +62,7 @@ public class LanguagesFragment extends Fragment implements View.OnClickListener{
         getDataController = new GetDataController(this);//Appel du Controller pour récupérer les données
         getDataController.onCreate();
 
-        final Button add_button = root.findViewById(R.id.add_button);
+        final Button add_button = root.findViewById(R.id.add_button);//Définition des boutons et champs
         Button del_button = root.findViewById(R.id.del_button);
         add_button.setOnClickListener(this);
         del_button.setOnClickListener(this);
@@ -140,9 +138,7 @@ public class LanguagesFragment extends Fragment implements View.OnClickListener{
     @Override
     public void onClick(View view) {
         if (view.getId() == R.id.add_button) {
-            //System.out.println(et_name.getText().toString());
-            //Snackbar makeToast "Langage créé !"
-            String newname = et_name.getText().toString();
+            String newname = et_name.getText().toString();//Création d'un animal via les champs de texte
             String newcolor_primarydark = et_color.getText().toString();
             String newcolor_primary = et_color.getText().toString();
             String newbeginning = et_beginning.getText().toString();
@@ -152,7 +148,15 @@ public class LanguagesFragment extends Fragment implements View.OnClickListener{
             sendAnimalController = new SendAnimalController(this, newanimal);
             sendAnimalController.onCreate();
         } else if(view.getId() == R.id.del_button){
-            System.out.println("Del_Button");
+            String newname = et_name.getText().toString();//Création d'un animal via les champs de texte
+            String newcolor_primarydark = et_color.getText().toString();
+            String newcolor_primary = et_color.getText().toString();
+            String newbeginning = et_beginning.getText().toString();
+            String newmiddle = et_middle.getText().toString();
+            String newending = et_ending.getText().toString();
+            Animal delanimal = new Animal(newname, newcolor_primary, newcolor_primarydark, newbeginning, newmiddle, newending);
+            delAnimalController = new DelAnimalController(this, delanimal);
+            delAnimalController.onCreate();
         } else{
             System.out.println("Error onClick (buttons)");
         }

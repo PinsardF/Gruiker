@@ -1,6 +1,5 @@
 package com.example.gruiker.ViewModel;
 
-import android.content.Context;
 import android.content.SharedPreferences;
 
 import androidx.lifecycle.LiveData;
@@ -14,7 +13,6 @@ public class SettingsViewModel extends ViewModel {
     SharedPreferences.Editor editor;
 
     public SettingsViewModel() {
-        //sharedPreferences = getSharedPreferences("", Context.MODE_PRIVATE);
         mText = new MutableLiveData<>();
         mText.setValue("Change your settings");
     }

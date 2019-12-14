@@ -1,4 +1,4 @@
-package com.example.gruiker.Model;//A COMMENTER
+package com.example.gruiker.Model;
 
 import android.os.Build;
 import android.util.Log;

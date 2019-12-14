@@ -1,7 +1,5 @@
 package com.example.gruiker.ViewModel;
 
-import android.view.View;
-
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
