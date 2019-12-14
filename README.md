@@ -11,7 +11,7 @@ La vue principale affiche le texte, et le bouton LANG permet de passer de "tradu
 
 # NavBar
 
-![](https://imgur.com/6YjxXI7)
+![](https://i.imgur.com/6YjxXI7.png)
 La NavBar possède 3 onglets : l'onglet Tweets qui affiche le texte traduisible, l'onglet Langages qui permet de changer, créer ou supprimer des langages, et l'onglet Settings, utile uniquement au développeur.
 
 -----------------------------------------------------------------------------------------------------------------------------------
