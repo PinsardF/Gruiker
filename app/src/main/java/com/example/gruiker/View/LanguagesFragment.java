@@ -150,7 +150,7 @@ public class LanguagesFragment extends Fragment implements View.OnClickListener{
             String newending = et_ending.getText().toString();
             Animal newanimal = new Animal(newname, newcolor_primary, newcolor_primarydark, newbeginning, newmiddle, newending);
             sendAnimalController = new SendAnimalController(this, newanimal);
-            getDataController.onCreate();
+            sendAnimalController.onCreate();
         } else if(view.getId() == R.id.del_button){
             System.out.println("Del_Button");
         } else{
