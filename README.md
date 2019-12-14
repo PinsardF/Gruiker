@@ -6,7 +6,13 @@ Malheureusement, n'arrivant pas à utiliser l'API Twitter malgré de nombreuses 
 
 # Vue Principale
 
-![](https://i.imgur.com/244bt5R.png | width=100)
+![](https://i.imgur.com/244bt5R.png)
+La vue principale affiche le texte, et le bouton LANG permet de passer de "traduit" à "non traduit" (le texte est non traduit dans cette image).
+
+# NavBar
+
+![](https://imgur.com/6YjxXI7)
+La NavBar possède 3 onglets : l'onglet Tweets qui affiche le texte traduisible, l'onglet Langages qui permet de changer, créer ou supprimer des langages, et l'onglet Settings, utile uniquement au développeur.
 
 -----------------------------------------------------------------------------------------------------------------------------------
 
