@@ -5,6 +5,15 @@ import com.google.gson.annotations.SerializedName;
 
 public class Animal {
 
+    public Animal(String name, String primary_color, String primary_color_dark, String beginning, String middle, String ending){
+        this.name = name;
+        this.primary_color = primary_color;
+        this.primary_color_dark = primary_color_dark;
+        this.beginning = beginning;
+        this.middle = middle;
+        this.ending = ending;
+    }
+
     @SerializedName("name")
     @Expose
     private String name = "";

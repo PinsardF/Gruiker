@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -22,6 +23,7 @@ import androidx.lifecycle.ViewModelProviders;
 import com.example.gruiker.Model.Animal;
 import com.example.gruiker.Model.GetDataController;
 import com.example.gruiker.Model.ListAnimal;
+import com.example.gruiker.Model.SendAnimalController;
 import com.example.gruiker.R;
 import com.example.gruiker.ViewModel.LanguagesViewModel;
 import com.google.android.material.navigation.NavigationView;
@@ -33,7 +35,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class LanguagesFragment extends Fragment {
+public class LanguagesFragment extends Fragment implements View.OnClickListener{
 
     String colorPrimary;
     String colorPrimaryDark;
@@ -43,9 +45,15 @@ public class LanguagesFragment extends Fragment {
     String ending;
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
+    public EditText et_name;
+    public EditText et_beginning;
+    public EditText et_middle;
+    public EditText et_ending;
+    public EditText et_color;
 
     private NavigationView nv;
     private GetDataController getDataController;
+    private SendAnimalController sendAnimalController;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         ViewModelProviders.of(this).get(LanguagesViewModel.class);
@@ -58,6 +66,13 @@ public class LanguagesFragment extends Fragment {
 
         final Button add_button = root.findViewById(R.id.add_button);
         Button del_button = root.findViewById(R.id.del_button);
+        add_button.setOnClickListener(this);
+        del_button.setOnClickListener(this);
+        et_name = root.findViewById(R.id.editText_name);
+        et_beginning = root.findViewById(R.id.editText_beginning);
+        et_middle = root.findViewById(R.id.editText_middle);
+        et_ending = root.findViewById(R.id.editText_ending);
+        et_color = root.findViewById(R.id.editText_color);
 
         getActivity().findViewById(R.id.activity_main);
         nv = (NavigationView)getActivity().findViewById(R.id.nv);
@@ -120,5 +135,26 @@ public class LanguagesFragment extends Fragment {
         });
 
         return root;
+    }
+
+    @Override
+    public void onClick(View view) {
+        if (view.getId() == R.id.add_button) {
+            //System.out.println(et_name.getText().toString());
+            //Snackbar makeToast "Langage créé !"
+            String newname = et_name.getText().toString();
+            String newcolor_primarydark = et_color.getText().toString();
+            String newcolor_primary = et_color.getText().toString();
+            String newbeginning = et_beginning.getText().toString();
+            String newmiddle = et_middle.getText().toString();
+            String newending = et_ending.getText().toString();
+            Animal newanimal = new Animal(newname, newcolor_primary, newcolor_primarydark, newbeginning, newmiddle, newending);
+            sendAnimalController = new SendAnimalController(this, newanimal);
+            getDataController.onCreate();
+        } else if(view.getId() == R.id.del_button){
+            System.out.println("Del_Button");
+        } else{
+            System.out.println("Error onClick (buttons)");
+        }
     }
 }

@@ -1,10 +1,12 @@
 package com.example.gruiker.ViewModel;
 
+import android.view.View;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class LanguagesViewModel extends ViewModel {
+public class LanguagesViewModel extends ViewModel{
 
     private MutableLiveData<String> mText;
 
