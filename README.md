@@ -6,8 +6,7 @@ Malheureusement, n'arrivant pas à utiliser l'API Twitter malgré de nombreuses 
 
 # Vue Principale
 
-![Test image](https://imgur.com/a/KBHVNwc)
-<blockquote class="imgur-embed-pub" lang="en" data-id="a/KBHVNwc"><a href="//imgur.com/a/KBHVNwc">HOME</a></blockquote><script async src="//s.imgur.com/min/embed.js" charset="utf-8"></script>
+![Test image](https://i.imgur.com/KBHVNwc.png)
 
 -----------------------------------------------------------------------------------------------------------------------------------
 
